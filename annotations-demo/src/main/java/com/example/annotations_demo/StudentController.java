@@ -1,10 +1,7 @@
 package com.example.annotations_demo;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,8 +22,30 @@ public class StudentController {
 
     //get all student details and sending response back to service
     @GetMapping("/")
-    public List<StudentEntity> getStudentEntity()
-    {
-        return studentService.getStudentEntity();
+    public List<StudentEntity> getStudent() {
+        return studentService.getStudent();
     }
+
+    // POST API - Create a new student
+    @PostMapping("/")
+    public StudentEntity CreateStudent(@RequestBody StudentEntity studentEntity) {
+        return studentService.createStudent(studentEntity);
+    }
+
+    //UPDATE API - update existing student
+    @PutMapping("/{id}")
+    public StudentEntity updateStudent(@PathVariable String id, @RequestBody StudentEntity studentEntity) {
+
+        return studentService.updateStudent(id, studentEntity);
+    }
+
+    //DELETE API-Delete existing student
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable String id) {
+        studentService.deleteStudent(id);
+        return "student Deleted Successfully";
+
+
+    }
+
 }
